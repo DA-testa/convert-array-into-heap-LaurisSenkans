@@ -2,7 +2,7 @@
 
 def sift_down(data, i, swaps):
     
-    
+
     left = 2 * i + 1
     right = 2 * i + 2
 
@@ -33,24 +33,36 @@ def build_heap(data):
 
 
 def main():
-    input_type = input("Enter input type (F for file, otherwise keyboard input): ")
-    if input_type.lower() == 'f':
-        input_filename = input("Enter input file name: ")
-        with open(input_filename, 'r') as f:
-            input_data = f.read().split('\n')
-    else:
-        input_data = [input(), input()]
+    # take input from the user
+    input_type = input("Enter I for keyboard input, F for file input: ").strip()
 
-    n = int(input_data[0])
-    data = list(map(int, input_data[1].split()))
+    # input from keyboard
+    if input_type == "I":
+        n = int(input())
+        data = list(map(int, input().split()))
+
+    # input from file
+    elif input_type == "F":
+        file_dir = input("Enter file name/path: ")
+        with open(f"./tests/{file_dir}") as f:
+            n = int(f.readline())
+            data = list(map(int, f.readline().split()))
+
+    else:
+        print("Invalid input type")
+        return
+
+    # checks if length of data is the same as the said length
     assert len(data) == n
 
-   
+    # calls function to assess the data
+    # and give back all swaps
     swaps = build_heap(data)
 
+    # output how many swaps were made
+    print(f"Number of swaps: {len(swaps)}")
 
-
-    print(len(swaps))
+    # output all swaps
     for i, j in swaps:
         print(i, j)
 
